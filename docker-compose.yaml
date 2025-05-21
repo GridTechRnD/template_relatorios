@@ -1,0 +1,8 @@
+services:
+  html2pdf:
+    build: .
+    ports:
+      - "10001:10001"
+    volumes:
+      - ./media:/media
+    restart: on-failure:5
