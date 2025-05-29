@@ -10,7 +10,8 @@ from fpdf import FPDF
 from playwright.async_api import async_playwright
 
 
-app = FastAPI(name="Gerador de relatório", version="1.0.0", root_path="/html2pdf")
+app = FastAPI(name="Gerador de relatório", version="1.0.0",
+              root_path="/html2pdf", swagger_ui_parameters={"syntaxHighlight": True})
 
 
 async def html_pdf(html_string, pdf_path, img_path):
@@ -47,8 +48,9 @@ async def build(item: Model):
                 base64.b64decode(i)
             except Exception:
                 raise Exception("The blob is not a base64 string")
-            
-    item["images"] = '\n'.join([f'<img src="data:image/png;base64, {i}" />' for i in item["images"]])
+
+    item["images"] = '\n'.join(
+        [f'<img src="data:image/png;base64, {i}" />' for i in item["images"]])
     html = HTML.format(**item)
     pdf_path = "/media/temp.pdf"
     img_path = "/media/temp_image.jpg"
@@ -61,6 +63,7 @@ async def build(item: Model):
     )
 
     from fastapi import BackgroundTasks
+
     def cleanup():
         os.remove(pdf_path)
     response.background = BackgroundTasks()

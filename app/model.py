@@ -2,6 +2,8 @@ from pydantic import BaseModel
 
 
 class Model(BaseModel):
+    host: str
+    model: str
     document_name: str
     date: str
     document_content: str
