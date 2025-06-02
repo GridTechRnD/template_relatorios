@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class Model(BaseModel):
+    enterprise_logo: str
     document_name: str
     date: str
     document_content: str
