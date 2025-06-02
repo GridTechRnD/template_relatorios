@@ -48,9 +48,9 @@ async def build(item: Model):
                 base64.b64decode(i)
             except Exception:
                 raise Exception("The blob is not a base64 string")
-
-    item["images"] = '\n'.join(
-        [f'<img src="data:image/png;base64, {i}" />' for i in item["images"]])
+    
+    item["enterprise_logo"] = f'<img src="data:image/png;base64, {item["enterprise_logo"]}" width="84" height="34"/>'
+    item["images"] = '\n'.join([f'<img src="data:image/png;base64, {i}" />' for i in item["images"]])
     html = HTML.format(**item)
     pdf_path = "/media/temp.pdf"
     img_path = "/media/temp_image.jpg"
