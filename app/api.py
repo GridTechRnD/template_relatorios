@@ -22,6 +22,8 @@ async def html_pdf(html_string, pdf_path, img_path):
             device_scale_factor=5
         )
         await page.set_content(html_string)
+        page.wait_for_load_state('networkidle')
+        await page.evaluate("document.fonts.ready")
         screenshot_bytes = await page.screenshot(full_page=True)
         await browser.close()
 
