@@ -8,7 +8,7 @@ from model import Model
 from PIL import Image
 from fpdf import FPDF
 from playwright.async_api import async_playwright
-from base_64 import HEXING_LOGO, TAHOMA, CELESC_LOGO
+from base_64 import HEXING_LOGO, TAHOMA, CELESC_LOGO, CPFL_LOGO
 
 app = FastAPI(
     name="Gerador de relatório",
@@ -59,15 +59,15 @@ async def build(item: Model):
     )
     enterprise_logo = ""
     if item["enterprise_logo"] and item["enterprise_logo"] == "celesc":
-        enterprise_logo = (
-            f'<img src="data:image/png;base64, {CELESC_LOGO}" width="84" height="34"/>'
-        )
+        enterprise_logo = CELESC_LOGO
+    elif item["enterprise_logo"] and item["enterprise_logo"] == "cpfl":
+        enterprise_logo = CPFL_LOGO
 
     item.update(
         {
             "HEXING_LOGO": f'<img src="data:image/png;base64, {HEXING_LOGO}" width="69" height="61"/>'.strip(),
             "TAHOMA": TAHOMA.strip(),
-            "enterprise_logo": enterprise_logo.strip(),
+            "enterprise_logo": f'<img src="data:image/png;base64, {enterprise_logo}" width="84" height="34"/>'.strip(),
         }
     )
 
