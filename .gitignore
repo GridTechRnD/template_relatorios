@@ -2,3 +2,6 @@ test.py
 .venv
 .env
 .git
+app/__pycache__/
+app/__pycache__/
+app/__pycache__/

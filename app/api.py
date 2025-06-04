@@ -1,14 +1,16 @@
-import io
-import os
+from base_64 import HEXING_LOGO, TAHOMA, CELESC_LOGO, CPFL_LOGO
+from model import CelescModel, CPFLModel
+from template import CPFL_HTML, CELESC_HTML
+
 import base64
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from template import HTML
-from model import Model
-from PIL import Image
 from fpdf import FPDF
+import io
+import os
+from PIL import Image
 from playwright.async_api import async_playwright
-from base_64 import HEXING_LOGO, TAHOMA, CELESC_LOGO, CPFL_LOGO
+
 
 app = FastAPI(
     name="Gerador de relatório",
@@ -45,7 +47,7 @@ async def html_pdf(html_string, pdf_path, img_path):
 
 
 @app.post("/build")
-async def build(item: Model):
+async def build(item: CelescModel | CPFLModel):
     item = item.model_dump()
     for i in item["images"]:
         if isinstance(i, str):
@@ -58,10 +60,13 @@ async def build(item: Model):
         [f'<img src="data:image/png;base64, {i}" />' for i in item["images"]]
     )
     enterprise_logo = ""
+    HTML = ""
     if item["enterprise_logo"] and item["enterprise_logo"] == "celesc":
         enterprise_logo = CELESC_LOGO
+        HTML = CELESC_HTML
     elif item["enterprise_logo"] and item["enterprise_logo"] == "cpfl":
         enterprise_logo = CPFL_LOGO
+        HTML = CPFL_HTML
 
     item.update(
         {

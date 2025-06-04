@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class Model(BaseModel):
+class CelescModel(BaseModel):
     host: str
     model: str
     enterprise_logo: str
@@ -27,6 +27,38 @@ class Model(BaseModel):
     grid_voltage: str
     power: str
     conductor_type: str
+    device_installation_address: str
+    antenna_installation_address: str
+    info: str
+    more_info: str
+    images: list[str]
+
+
+class CPFLModel(BaseModel):
+    host: str
+    model: str
+    enterprise_logo: str
+    document_name: str
+    date: str
+    document_content: str
+    ap_type: str
+    device_id: str
+    ps_id: str
+    address: str
+    municipality: str
+    lat: str
+    long: str
+    antenna: str
+    dbi_gain: str
+    device_mode: str
+    provider: str
+    signal_power: str
+    speed: str
+    structure_type: str
+    m_dan: str
+    grounding: str
+    grid_voltage: str
+    power: str
     device_installation_address: str
     antenna_installation_address: str
     info: str
