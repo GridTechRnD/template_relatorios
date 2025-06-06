@@ -60,7 +60,6 @@ class CPFLModel(BaseModel):
     grid_voltage: str
     power: str
     device_installation_address: str
-    antenna_installation_address: str
     info: str
     more_info: str
     images: list[str]
