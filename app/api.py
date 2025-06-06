@@ -62,17 +62,17 @@ async def build(item: CelescModel | CPFLModel):
     enterprise_logo = ""
     HTML = ""
     if item["enterprise_logo"] and item["enterprise_logo"] == "celesc":
-        enterprise_logo = CELESC_LOGO
+        enterprise_logo = CELESC_LOGO + "\" width=\"84\" height=\"34\""
         HTML = CELESC_HTML
     elif item["enterprise_logo"] and item["enterprise_logo"] == "cpfl":
-        enterprise_logo = CPFL_LOGO
+        enterprise_logo = CPFL_LOGO + "\" width=\"58\" height=\"44\""
         HTML = CPFL_HTML
 
     item.update(
         {
             "HEXING_LOGO": f'<img src="data:image/png;base64, {HEXING_LOGO}" width="69" height="61"/>'.strip(),
             "TAHOMA": TAHOMA.strip(),
-            "enterprise_logo": f'<img src="data:image/png;base64, {enterprise_logo}" width="84" height="34"/>'.strip(),
+            "enterprise_logo": f'<img src="data:image/png;base64, {enterprise_logo} />'.strip(),
         }
     )
 
