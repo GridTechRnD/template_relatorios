@@ -523,7 +523,7 @@ CPFL_HTML: str = """<!DOCTYPE html>
         <tr>
             <td style="padding-left: 1ch; border-bottom: 1px solid #000000; border-left: 2px solid #000000; border-right: 1px solid #000000"
                 colspan=2 height="18" align="left" valign=middle>
-                <font face="TahomaB64" color="#000000">Data da execução:</font>
+                <b><font face="TahomaB64" color="#000000">Data da elaboração:</font></b>
             </td>
             <td style="padding-left: 1ch; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 2px solid #000000"
                 colspan=5 align="left" valign=middle sdnum="1046;1046;DD-MMM-AA;@"><b>
@@ -553,7 +553,7 @@ CPFL_HTML: str = """<!DOCTYPE html>
         <tr>
             <td style="padding-left: 1ch; padding-left: 1ch; border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 2px solid #000000; border-right: 1px solid #000000"
                 height="18" align="left" valign=middle>
-                <font face="TahomaB64" color="#000000">ID do dispositivo</font>
+                <b><font face="TahomaB64" color="#000000">ID do dispositivo</font></b>
             </td>
             <td style="padding-left: 1ch; border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 0px solid #000000"
                 colspan=2 align="left" valign=middle><b>
