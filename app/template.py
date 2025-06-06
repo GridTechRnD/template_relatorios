@@ -769,7 +769,7 @@ CPFL_HTML: str = """<!DOCTYPE html>
         <tr>
             <td style="padding-left: 2px; border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 2px solid #000000; border-right: 0px solid #000000"
                 height="18" align="left" valign=middle>
-                <font face="TahomaB64" color="#000000">Observações:</font>
+                <b><font face="TahomaB64" color="#000000">Observações:</font></b>
             </td>
             <td style="padding-left: 2px; border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 0px solid #000000; border-right: 2px solid #000000"
                 colspan=7 align="left" valign=middle><b>
