@@ -6,6 +6,7 @@ from fastapi.responses import FileResponse
 import base64
 import os
 
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     name="Gerador de relatório",
@@ -18,12 +19,14 @@ app = FastAPI(
 @app.post("/build")
 async def build(item: CelescModel | CPFLModel):
     item = item.model_dump()
+    images = []
     for i in item["images"]:
         if isinstance(i, str):
             try:
                 base64.b64decode(i)
+                images.append(i)
             except Exception:
-                raise Exception("The blob is not a base64 string")
+                logger.warning("The blob is not a base64 string %s", i)
 
     template = {
         "celesc": [CELESC_TEX, "/media/celesc.png"],
