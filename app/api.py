@@ -4,6 +4,7 @@ from tex_to_pdf import tex_to_pdf
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 import base64
+import logging
 import os
 
 logger = logging.getLogger(__name__)
