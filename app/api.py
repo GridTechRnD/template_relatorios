@@ -1,11 +1,12 @@
-from model import CelescModel, CPFLModel
-from templates import CPFL_TEX, CELESC_TEX
-from tex_to_pdf import tex_to_pdf
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
 import base64
 import logging
 import os
+
+from fastapi import BackgroundTasks, FastAPI, Path
+from fastapi.responses import FileResponse
+from model import CelescModel, CpflHXAPModel, CpflRelayModel
+from templates import CELESC_TEX, CPFL_HXAP_TEX, CPFL_RELAY_TEX
+from tex_to_pdf import tex_to_pdf
 
 logger = logging.getLogger(__name__)
 
@@ -16,9 +17,18 @@ app = FastAPI(
     swagger_ui_parameters={"syntaxHighlight": True},
 )
 
+templates = {
+    "celesc": [CELESC_TEX, "/media/celesc.png"],
+    "cpfl_hxap": [CPFL_HXAP_TEX, "/media/cpfl.png"],
+    "cpfl_relay": [CPFL_RELAY_TEX, "/media/cpfl.png"],
+}
 
-@app.post("/build")
-async def build(item: CelescModel | CPFLModel):
+
+@app.post("/build/{template}")
+async def build(
+    template: str = Path(..., description="Nome do template"),
+    item: CelescModel | CpflHXAPModel | CpflRelayModel = None,
+):
     item = item.model_dump()
     images = []
     for i in item["images"]:
@@ -29,21 +39,17 @@ async def build(item: CelescModel | CPFLModel):
             except Exception:
                 logger.warning("The blob is not a base64 string %s", i)
 
-    template = {
-        "celesc": [CELESC_TEX, "/media/celesc.png"],
-        "cpfl": [CPFL_TEX, "/media/cpfl.png"]
-    }
-    tex, enterprise_logo = template.get(item["enterprise_logo"], (None, None))
+    if template not in templates:
+        return {"error": "Template not found"}
 
-    item.pop("enterprise_logo")
+    tex, enterprise_logo = templates.get(template, (None, None))
+
     pdf_path = "/media/temp.pdf"
     tex_to_pdf(tex=tex, enterprise_logo=enterprise_logo, **item)
 
     response = FileResponse(
         pdf_path, media_type="application/pdf", filename="documento.pdf"
     )
-
-    from fastapi import BackgroundTasks
 
     def cleanup():
         os.remove(pdf_path)

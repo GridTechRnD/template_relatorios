@@ -8,7 +8,8 @@ import subprocess
 def tex_to_pdf(tex: str, enterprise_logo: str, **kwargs) -> None:
     if not shutil.which("xelatex"):
         raise ModuleNotFoundError(
-            "Module \"xelatex\" not found in OS! Please install texlive-xetex and try again.")
+            'Module "xelatex" not found in OS! Please install texlive-xetex and try again.'
+        )
 
     temp_images: list[str] = []
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -23,18 +24,18 @@ def tex_to_pdf(tex: str, enterprise_logo: str, **kwargs) -> None:
             **kwargs,
             **{f"temp_image{i+1}": image for i, image in enumerate(temp_images)},
             enterprise_logo=enterprise_logo,
-            hexing_logo="/media/hexing.png")
+            hexing_logo="/media/hexing.png",
+        )
 
-        with open(tex_path, "w") as f:
+        with open(tex_path, "w", encoding="utf-8") as f:
             f.write(tex)
         try:
             subprocess.run(
-                ["xelatex", "-interaction=nonstopmode", tex_path],
-                cwd=tmpdir
+                ["xelatex", "-interaction=nonstopmode", tex_path], cwd=tmpdir
             )
             pdf_path = os.path.join(tmpdir, "temp.pdf")
             if os.path.exists(pdf_path):
                 shutil.move(pdf_path, "/media/temp.pdf")
 
         except subprocess.CalledProcessError as e:
-            raise Exception(f"Erro ao compilar o LaTeX: {e}")
+            raise RuntimeError(f"Erro ao compilar o LaTeX: {e}") from e

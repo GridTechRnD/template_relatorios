@@ -1,21 +1,20 @@
-FROM python:3.11.9-alpine
+FROM python:slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+    texlive-latex-base \
+    texlive-latex-extra \
+    texlive-xetex \
+    texlive-latex-recommended && \
+    rm -rf /var/lib/apt/lists/* && \
+    ln -s /usr/bin/mktexlsr /usr/bin/mktexlsr.pl
 
 WORKDIR /app
 
 COPY ./requirements.txt /app/requirements.txt
-
-RUN apk add -U make
-
-RUN apk add -U --repository http://dl-3.alpinelinux.org/alpine/edge/main \
-    poppler harfbuzz-icu
-
-RUN apk add -U --repository http://dl-3.alpinelinux.org/alpine/edge/community \
-    zziplib
-
-RUN apk add -U --repository http://dl-3.alpinelinux.org/alpine/edge/testing \
-    texlive-full
-
-RUN ln -s /usr/bin/mktexlsr /usr/bin/mktexlsr.pl
 
 RUN pip install --no-cache-dir -r /app/requirements.txt 
 

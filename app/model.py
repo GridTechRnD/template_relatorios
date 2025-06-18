@@ -4,11 +4,9 @@ from pydantic import BaseModel
 class CelescModel(BaseModel):
     host: str
     model: str
-    enterprise_logo: str
     document_name: str
     date: str
     document_content: str
-    ap_type: str
     device_id: str
     ami_id: str
     address: str
@@ -34,14 +32,12 @@ class CelescModel(BaseModel):
     images: list[str]
 
 
-class CPFLModel(BaseModel):
+class CpflHXAPModel(BaseModel):
     host: str
     model: str
-    enterprise_logo: str
     document_name: str
     date: str
     document_content: str
-    ap_type: str
     device_id: str
     ps_id: str
     address: str
@@ -54,6 +50,31 @@ class CPFLModel(BaseModel):
     provider: str
     signal_power: str
     speed: str
+    structure_type: str
+    m_dan: str
+    grounding: str
+    grid_voltage: str
+    power: str
+    device_installation_address: str
+    info: str
+    more_info: str
+    images: list[str]
+
+
+class CpflRelayModel(BaseModel):
+    host: str
+    model: str
+    document_name: str
+    date: str
+    document_content: str
+    device_id: str
+    ps_id: str
+    address: str
+    municipality: str
+    lat: str
+    long: str
+    antenna: str
+    dbi_gain: str
     structure_type: str
     m_dan: str
     grounding: str
