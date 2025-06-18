@@ -42,6 +42,19 @@ async def build(
     if template not in templates:
         return {"error": "Template not found"}
 
+    word_limit = 70
+    for key, value in item.items():
+        if isinstance(value, str):
+            v = value.replace("_", r"\_")
+            if len(v) > word_limit:
+                cut = v.rfind(" ", 0, word_limit)
+                if cut == -1:
+                    cut = word_limit
+                v = v[:cut]
+            item[key] = v
+
+    item.update({"images": images})
+
     tex, enterprise_logo = templates.get(template, (None, None))
 
     pdf_path = "/media/temp.pdf"
